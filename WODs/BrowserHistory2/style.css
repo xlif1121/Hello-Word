@@ -10,6 +10,6 @@ body {
 }
 
 img{
-    floot: left;
+    float: left;
     margin-right: 10px;
 }
