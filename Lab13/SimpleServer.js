@@ -10,7 +10,6 @@ function request_callback(req, res) {
 }
 http.createServer(
     request_callback
-)
 ).listen(8080); //the server object listens on port 8080
 
 console.log('Hello world HTTP server listening on localhost port 8080');

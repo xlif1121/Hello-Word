@@ -1,0 +1,54 @@
+
+<script src="Products_data.js">
+  
+</script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Footwear Products</title>
+    <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
+    <link href="Products-style.css" rel="stylesheet">
+</head>
+<body id="theBody">
+    
+<header>
+        <h1>
+            Xinfei's Footwear Store
+        </h1>
+
+    </header>
+    <form action="./Invoice.html" method="POST">
+    <div>
+            <main>
+<script>
+    subtotal=0;
+    for (i=0; i< products.length; i++) {
+document.write(`
+<section class="item">
+                   <h2>${products[i].name}</h2>
+                    <p>${products[i].price}</p>
+                    <lable>Quantity:</lable>
+                        <input type="text" placeholder="0" name="quantity${i}">
+                    <img src="./images/${products[i].image}">
+                </section>
+`);
+    }
+     
+</script>
+            </main>
+        </div>
+        <input type="submit" value="Purchase">
+        </form>
+        <footer>
+    <h1>
+    Your One Stop For Footwear Shop
+    
+    </h1>
+        
+    </footer>
+
+    </body>
+    
+    </html>
