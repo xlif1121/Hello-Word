@@ -12,17 +12,17 @@
 
 }
 
-    window.onload =funtion() {
+window.onload = function() {
         // check that we have quantity
-    If( params.has("quantity_textbox")) {
-        // is the quanity valid? If so, print purchase. If not, give error
-        if(isNonNegInt(params.get('quantity_textbox'))) {
-    document.body.innerHTML=`Thank you for ordering ${params.get("quantity_textbox")}items`;
-        }else{
+        if (params.has('quantity_Textbox')) {
+            // Is the quantity valid? If so, print purchase. If not, give errors
+            if(isNonNegInt(params.get('quantity_Textbox'))) {
+            document.body.innerHTML = `Thank you for ordering ${params.get('quantity_Textbox')} items`;
+        } else {
             window.location.href = "order_page_Ex3.html" + document.location.search;
         }
-}
     }
+}
 </script>
 <!DOCTYPE html>
 <html lang="en">
