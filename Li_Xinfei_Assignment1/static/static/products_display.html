@@ -1,7 +1,4 @@
-
-<script src="products.js">
-  
-</script>
+<script src="products.js" type="text/javascript"></script>
 
 <script>
     function isNonNegInt(q, return_errors = false) {
@@ -44,8 +41,8 @@
                 alert("Please enter only valid quantities!");
             } else if(total_qty == 0) { // no quantity selections, just give a general alert
                 alert("Please select some quantities!");
-            } else { // all good to go!
-                window.location = `./invoice.html${document.location.search}`;
+            } else { // Good work
+                window.location = `./invoice3.html${document.location.search}`;
                 window.stop;
             }
         }
@@ -70,7 +67,7 @@
         </h1>
 
     </header>
-    <form action="./invoice3.html" method="POST">
+    <form action="./invoice3.html" method="GET">
     <div>
             <main>
                 <script>
