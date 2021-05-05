@@ -37,7 +37,7 @@ app.post("/process_login", function (req, res) {
             req.query.username = the_username; 
             console.log(user_data[req.query.username].name);
             req.query.name = user_data[req.query.username].name
-            res.redirect('/invoice4.html?' + queryString.stringify(req.query));
+            res.redirect('/invoice3.html?' + queryString.stringify(req.query));
             return; // all good, send to invoice
         } else { //password wrong, show invalid password
             LogError.push = ('Invalid Password');
@@ -87,8 +87,8 @@ app.post("/process_register", function (req, res) {
     }
 
     
-    if (req.body.password.length < 10) {//password length: 10 characters or more
-      errors.push('Password: At least 10 Characters and/or Numbers Required')
+    if (req.body.password.length < 6) {//password length: 6 characters or more
+      errors.push('Password: At least 6 Characters and/or Numbers Required')
     }
    
     if (req.body.password !== req.body.repeat_password) {  // matching password
@@ -105,7 +105,7 @@ app.post("/process_register", function (req, res) {
       user_data[username].email = req.body.email;
       data = JSON.stringify(user_data); 
       fs.writeFileSync(filename, data, "utf-8");
-      res.redirect('./invoice4.html?' + queryString.stringify(req.query));
+      res.redirect('./invoice3.html?' + queryString.stringify(req.query));
     }
     
     else{ //if error occurs, direct to register page
