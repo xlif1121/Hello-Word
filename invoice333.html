@@ -5,19 +5,21 @@
 
 
 <script>
-  let params = (new URL(document.location)).searchParams;
-  var quantities = [];
-  if (params.has('purchase_submit')) {
-    for (i = 0; i < products.length; i++) {
-      if (params.has(`quantity${i}`)) {
-        a_qty = params.get(`quantity${i}`);
-        quantities[i] = a_qty;
+    let params = (new URL(document.location)).searchParams;
+    var quantities = [];
+    // form was submitted so process the invoice
+    if (params.has('purchase_submit')) {
+      for (i = 0; i < products.length; i++) {
+        if (params.has(`quantity${i}`)) {
+          a_qty = params.get(`quantity${i}`);
+          quantities[i] = a_qty;
+        }
       }
+    } else {
+      document.write('no form submitted');
     }
-  }
-
-    
-</script>
+    console.log(quantities);
+  </script>
   
   <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +29,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="products-style.css" rel="stylesheet">
     <title>Document</title>
-  </head>
-  
-  <body>
     <style>
       body {
         transform: scale(1);
@@ -140,20 +139,15 @@
         }
       }
       </style>
-    <script>
-
-      if (name != 'undefined' && name !='') {
-          document.write (`<b>Aloha, ${name}! Please Review Your Itmes Below.</b>`)
-      }
-      else {
-          document.write(``)
-      }
-  </script>
+    </style>
+  </head>
+  
+  <body>
     <h2>Checkout Form</h2>
 <h3>Enter Your Payment Information</h3>
 
   <center>
-    <table id='invoice3' border="2">
+    <table border="2">
       <tbody>
         <tr>
           <th style="text-align: center;" width="43%">Item</th>
