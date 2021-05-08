@@ -7,8 +7,11 @@
     //let the users know if they have errors on username or password
     let params = (new URL(document.location)).searchParams;
     window.onload = function () {
-        if (params.has('=loginError')) {// if errors occurs, give alert
-            alert('Invalid Username or Passowrd');
+        if (params.has('LoginError')) {// if errors occurs, give alert
+            alert(params.get('LoginError'));
+        }
+        if(params.has('username')) {
+          usernameid.value=params.get('username')
         }
     }
     </script>
@@ -98,11 +101,11 @@
           </style>
         <form action="process_login"  method="POST">
         <div class="container">
-          <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" onchange='this.value=this.value.toLowerCase();' required>
+          <label for="username"><b>Username</b></label>
+          <input id="usernameid" type="text" placeholder="Enter Username" name="username" onchange='this.value=this.value.toLowerCase();' required>
           
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
+          <label for="password"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="password" required>
       
            <button class="log-in" type="submit" value="Login" name="login"> Login </button>
 
