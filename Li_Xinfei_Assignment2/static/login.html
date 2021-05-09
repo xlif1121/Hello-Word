@@ -99,7 +99,10 @@
             }
           }
           </style>
-        <form action="process_login"  method="POST">
+          <script>
+            document.write(`<form action="process_login${location.search}"  method="POST">`);
+          </script>
+         
         <div class="container">
           <label for="username"><b>Username</b></label>
           <input id="usernameid" type="text" placeholder="Enter Username" name="username" onchange='this.value=this.value.toLowerCase();' required>

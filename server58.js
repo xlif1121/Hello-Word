@@ -5,7 +5,7 @@ const queryString = require('qs');
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
-var filename = './user_data.json';
+var filename = 'user_data.json';
 var fs = require('fs');
 const { request, response } = require('express');
 
@@ -18,11 +18,11 @@ app.all('*', function (request, response, next) {
 app.use(myParser.urlencoded({ extended: true }));
 
 if (fs.existsSync(filename)) {
-  var data = fs.readFileSync(filename, 'utf-8');
-  var user_data = JSON.parse(data);
+  data = fs.readFileSync(filename, 'utf-8');
+  user_data = JSON.parse(data);
 
 } else {
-  console.log(`${filename} does not exist!`);
+  console.log(filename + ' does not exist!');
 }
 
 
@@ -49,15 +49,53 @@ app.post("/process_login", function (req, res) {
 
 //this process the register form
 app.post("/process_register", function (req, res) {
+console.log(req.body);
+  if (/^[A-Za-z]+$/.test(req.body.fullname)) { //setup for name limitations
+  }
+  else {
+    errors.push('Invalid Fullname! Please Use Only Letters for Fullname')
+  };
 
+  if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {//username can be only letter and number
+    console.log('Valid username');
+  }
+  else {
+    errors.push('Username Only Can Be Letters And Numbers')
+  };
+
+  if (req.body.password == req.body.repeat_password) {  // matching password
+    console.log('Matched password');
+  }
+  else{
+    errors.push('Password Does Not Match')
+  };
+  if(/^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(req.body.email)) {
+    console.log('Correct email');
+  }
+  else{
+    errors.push('Invalid email')
+  }
+
+  //request basic info
   username = req.body["username"];
   user_data[username] = {};
   user_data[username]["name"] = req.body['fullname'];
   user_data[username]["password"]= req.body['password'];
   user_data[username]["email"] = req.body['email'];
   
-  res.send(`${username} is registered`);
-  fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
+
+  if (errors.length == 0) { // Save user's register information if no error
+    data = JSON.stringify(user_data);
+    fs.writeFileSync(filename, data, "utf-8");
+    req.redirect('./invoice3.html?' + queryString.stringify(req.query));
+    return;
+  }
+
+  else { //check to see if the error occurs 
+    console.log('./register.html?' + queryString.stringify(req.query));
+    req.redirect('./register.html?' + queryString.stringify(req.query));//redirect to register page
+  }
+  
 });
 
 
