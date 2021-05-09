@@ -33,7 +33,7 @@ app.post("/process_login", function (req, res) {
 
   if (typeof user_data[the_username] != 'undefined') { //matching username
     if (user_data[the_username].password == req.body.password) { //if all the info is correct, then redirect to the invoice page
-      res.redirect('/invoice3.html?' + queryString.stringify(req.query));
+      res.redirect('/invoice3.html' + queryString.stringify(req.query));
       return;
 
     } else { //if the pw has error, push an error
@@ -56,10 +56,8 @@ app.post("/process_register", function (req, res) {
   user_data[username]["password"]= req.body['password'];
   user_data[username]["email"] = req.body['email'];
   
-  
-    fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
-    res.redirect('/invoice3.html?' + queryString.stringify(req.query));
-  
+  res.send(`${username} is registered`);
+  fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
 });
 
 
