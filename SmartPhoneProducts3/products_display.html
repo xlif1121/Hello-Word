@@ -1,5 +1,5 @@
-<script src="./products_data.js">
-  
+<script src="products_data.js">
+
 </script>
 <!DOCTYPE html>
 <html>
@@ -7,36 +7,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Smartphone Products</title>
-    <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
-    <link href="products-style.css" rel="stylesheet">
-</head>
+    <link rel="stylesheet" type="text/css" href="products-style.css">
+
 <body>
-    
-<header>
-        <h1>
-                Xinfei's Used Smart Phone Store
-        </h1>
-
-    </header>
+    <h1>Used Smart Phone Store</h1>
     <div>
-            <main>
-<script>
-    for (i=0; i< products.length; i++) {
+        <main>
+            <script>
+                for (i = 0; i <= products.length; i++) {
 
-document.write(`
-<section class="item">
-                   <h2>${products[i].brand}</h2>
-                    <p>${products[i].price}</p>
-                    <img src="${products[i].image}">
-                </section>
-`);
-            }
+                
+                document.write(`
+                <section class="item">
+                <h2>${products[i].brand}</h2>
+                <p>${products[i].price}</p>
+                <img src="${products[i].image}">
+            </section>
+                `);
+        }
+            </script>
+        </main>
+    </div>
+    <h1>
+        Your One Stop Phone Shop
+    </h1>
 
-</script>
-            </main>
-        </div>
-        <footer><h1>Your One Stop Phone Shop</h1></footer>
+</body>
 
-    </body>
-    
-    </html>
+</html>
