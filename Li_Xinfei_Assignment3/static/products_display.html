@@ -59,102 +59,33 @@
     <title>Footwear Products</title>
     <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
     <link href="Products-style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    .navbar {
-      overflow: hidden;
-      background-color: #333;
-    }
-    
-    .navbar a {
-      float: left;
-      font-size: 16px;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    
-    .dropdown {
-      float: left;
-      overflow: hidden;
-    }
-    
-    .dropdown .dropbtn {
-      font-size: 16px;  
-      border: none;
-      outline: none;
-      color: white;
-      padding: 14px 16px;
-      background-color: inherit;
-      font-family: inherit;
-      margin: 0;
-    }
-    
-    .navbar a:hover, .dropdown:hover .dropbtn {
-      background-color: red;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-    
-    .dropdown-content a {
-      float: none;
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      text-align: left;
-    }
-    
-    .dropdown-content a:hover {
-      background-color: #ddd;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    </style>
-    <body>
-
 </head>
 <body id="theBody">
     
-        
-<header>    <h1>
-            Xinfei's Footwear Store
-        </h1>
-        <br>
-        <div class="navbar">
-          <a href="./index.html">Home</a>
-          <a href="./products_display.html">Products</a>
-          <a href="./invoice3.html">Shopping Cart</a>
-          <div class="dropdown">
-            <button class="dropbtn">Account 
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a class="active" href="./login.html">Login</a>
-                <a href="./register.html">Register</a>
-            </div>
-          </div> 
+    <header>    <h1>
+        Xinfei's Footwear Store
+    </h1>
+    <br>
+    <div class="navbar">
+      <a href="./index.html">Home</a>
+      <a href="./products_display.html">Products</a>
+      <a href="./invoice3.html">Shopping Cart</a>
+      <div class="dropdown">
+        <button class="dropbtn">Account 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a class="active" href="./login.html">Login</a>
+            <a href="./register.html">Register</a>
         </div>
-    
+      </div> 
+    </div>
+
 <br>
 <br>
 <br>
 <br>
-    </header>
+</header>
     <form action=" " name="product_selection_form" method="GET">
     <div>
             <main>
@@ -174,7 +105,7 @@
                 </script>
             </main>
         </div>
-        <input type="submit" value="Purchase" name="purchase_submit">
+        <input type="submit" value="Purchase" class="purchasebtn"  name="purchase_submit">
         </form>
     </body>
     

@@ -1,0 +1,77 @@
+<!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    let params = (new URL(document.location)).searchParams;
+    window.onload = function () {
+      if (params.has('errors')) {// if errors occur, give alert
+          console.log("invalid");
+          alert('Please fix the following errors: \n' + params.get('errors'));
+          }
+    }
+    window.onload = function () {
+        if (params.has('errors')) { // if errors occur, give alert
+            alert('Please fix these errors in order to process: \n' + params.get('errors'));
+            register["fullname"].value = params.get("fullname");
+            register["username"].value = params.get("username");
+            register["email"].value = params.get("email");
+        }
+      }
+  </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration page</title>
+    <link rel="stylesheet" href="register.css">
+
+
+</head>
+<body>
+  <script>
+    document.write(`<form action="process_register${location.search}" method="post">`);//add querestring in
+  </script>
+  
+  
+  <div class="imgcontainer">
+    <center><img src="./images/122.jpg" alt="Avatar" class="avatar"> </center> 
+    <center>
+      <div class="container">
+          <h1>Register Your Account</h1>
+          
+          <p>Please fill in this form to create an account.</p>
+          <hr>
+          <label for="name" size="30"><b>Fullname</b></label>
+          <input type="text" placeholder="Enter fullname" class="form__input" name="fullname" id="fullname"  pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" required>
+
+          <label for="username"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" class="form__input" name="username" id="username" pattern=".[a-z0-9]{3,10}" required title="Minimum: 6 Characters. Maximum: 10 Characters. Numbers and/or Letters Only.">
+          
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter Email" name="email" id="email" onchange='this.value=this.value.toLowerCase()' required>
+         
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" class="form__input" name="password" id="password" pattern=".{6,}" required title="Minimu: 6 Characters">
+        </div>
+
+          <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" class="form__input" name="repeat_password" id="repeat_password" pattern=".{6,}" required title="Minimu: 6 Characters">
+
+         
+
+
+          <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+          
+       <button class="register" type="submit" value="register" name="register"> Register </button>
+
+        </div>
+       
+        <div class="container signin">
+          <p>Already have an account? <a href="login.html">Sign in</a>.</p>
+        </div>
+      </form>
+      <script>
+ // save inputted query string
+    </script>
+</body>
+</html>
