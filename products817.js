@@ -1,4 +1,4 @@
-var products = [
+var products_array = [
     {
         'type':"Sneaker"
     },
@@ -93,11 +93,11 @@ var products = [
             ]
 
 
-var allProducts = {
+var productslist = {
 "Sneaker": Sneaker,
  "Bearbrick": Bearbrick,
 "Streetwear": Streetwear,
 };
 if (typeof module != 'undefined') {
- module.exports.allProducts = allProducts;
+ module.exports.productslist = productslist;
 }

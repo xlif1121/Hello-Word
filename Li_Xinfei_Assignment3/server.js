@@ -1,4 +1,4 @@
-//Borrowed and modified from examples given by DAN PORT in Lab13, LAb 14 and Lab15 and with help from w3schools, as example code and as2 screencaast 
+//Borrowed and modified from examples given by DAN PORT in Lab13, LAb 14 and Lab15 and with help from w3schools, as3 example code and as2 screencaast 
 // In order to load the product data
 var products_data = require('./products.js');
 var productslist = products_data.productslist
@@ -34,7 +34,7 @@ app.get("/add_shoppingcart", function (req, res) {
   var quantities = req.query['quantities'].map(Number); // Get quantities from the form post and convert strings from form post to numbers
   req.session.cart[products_key] = quantities; // store the quantities array in the session cart object with the same products_key. 
   res.redirect('./cart.html');
-});// 不是 fixed
+});
 
 app.get("/placeorder", function (req, res, next) {
   console.log(req.body);
@@ -46,7 +46,7 @@ app.get("/placeorder", function (req, res, next) {
     res.redirect('/login.html?' + queryString.stringify(req.query));
   }
 });
-//不是
+
 
 // this process the get cart(code from as3 example)
 app.post("/get_shoppingcart", function (req, res) {
@@ -101,7 +101,7 @@ app.get("/logout", function (req, res) {
   res.send(str); 
     req.session.destroy();
     res.redirect('./index.html');
-});//不是 fixed
+});
 
 //this process the register form
 app.post("/process_register", function (req, res) {
@@ -272,7 +272,7 @@ else {
 });
 res.send(str); // display string in browser
 ;
-// 不是
+
 
 
 

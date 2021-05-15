@@ -1,9 +1,9 @@
-<!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
-<script src="products.js"></script>
+<!--Borrowed and modified from examples given by DAN PORT in Lab13, LAb 14 and Lab15 and with help from w3schools, as3 example code and as2 screencaast-->
+<script src="/products.js"></script>
 <script> var products = 'Bearbrick'; </script>
+
 <script>
     window.onload = function () {
-        // params and structure from Lab12, modified for Assignment3
         let params = (new URL(document.location)).searchParams; // get the query string which has the form data
 
         // After form is submitted, check to see if quantities are valid
@@ -33,9 +33,6 @@
         }
     }
 
-    // let params = (new URL(document.location)).searchParams;
-    //var product_key = params.get("product_key");
-    //var product = products_list[product_key];//不是
 
     var data;
     loadJSON('get_data', function (res) {
@@ -163,7 +160,7 @@
                 }
                 else {
                     document.write(`<b>It is noting inside the shopping cart.</b>`)
-                };//不是
+                };
             </script>
             </div>
             <div>
