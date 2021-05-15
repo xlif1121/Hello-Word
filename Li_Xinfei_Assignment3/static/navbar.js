@@ -10,6 +10,7 @@ function navbar() {
     <div class="subnav-content">
     <a class="active" href="./login.html${location.search}">Login</a>
     <a href="./register.html${location.search}">Register</a>
+    <a href="./cart.html${location.search}">Shopping Cart</a>
     <a href="./process_logout">Logout</a>
 </div>
 
