@@ -15,13 +15,33 @@
         usernameid.value = params.get('username')
       }
     }
+    // setCookie from w3schools at https://www.w3schools.com/js/js_cookies.asp不是
+    function setCookie(cname, cvalue, exdays) {
+        var date = new Date(); // Draw from current time
+        date.setTime(date.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + date.toUTCString(); // Set up an expiration
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"; // Put into cookie
+    }
+
+    // deleteAllCookies function derived from https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";"); // Divide cookies
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Set cookie equal to name
+        }
+    }
   </script>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login page</title>
-
+  
+  
 
 </head>
 
@@ -135,7 +155,7 @@
 
   <div>
     <script>
-      document.write(`<p><center>New to Xinfei's footwear? Create an account and join the xinfei's footwear loyalty program. Earn points, redeem rewards, and more.<a href="./register.html${location.search}"> Sign Up Now!</a>.</p></center>`);
+      document.write(`<p><center>New to Xinfei's marketplace? Create an account and join the xinfei's marketplace loyalty program. Earn points, redeem rewards, and more.<a href="./register.html${location.search}"> Sign Up Now!</a>.</p></center>`);
     </script>
   </div>
   </form>

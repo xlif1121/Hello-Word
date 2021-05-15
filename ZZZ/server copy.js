@@ -1,4 +1,4 @@
-//Borrowed and modified from examples given by DAN PORT in Lab13, LAb 14 and Lab15 and with help from w3schools, and as2 screencaast 
+//Borrowed and modified from examples given by DAN PORT in Lab13 and Lab14 and with help from w3schools, as2 screencaast and Chole Cheng
 var data = require('./static/products');
 var products = data.products;
 const queryString = require('qs');
@@ -8,35 +8,39 @@ var myParser = require("body-parser");
 var filename = './user_data.json';
 var fs = require('fs');
 const { request, response } = require('express');
-var cookieParser = require('cookie-parser');
-app.use(cookieParser());
-now = new Date();
+
+// Play with sessions
+app.get('/set_session', function (req, res, next) {
+  res.send(`Welcome, your session ID is ${req.session.id}`);
+  req.session.destroy();
+  next();
+});
+
 
 // Play with cookies
 app.get('/set_cookie', function (req, res, next) {
-    // console.log(req.cookies);
-    let my_name = 'Xinfei Li';
-    res.cookie('my_name', my_name, {expire: 5000 + now.getTime()}); // cookie expires in 5 seconds
-    // res.clearCookie('my_name');
-    res.cookie('my_name', my_name); 
-    res.send(`Cookie for ${my_name} sent`);
-    next();
+  // console.log(req.cookies);
+  let my_name = 'Xinfei Li';
+  res.cookie('my_name', my_name, { expire: 90000 + now.getTime() }); // cookie expires in 5 seconds
+  // res.clearCookie('my_name');
+  res.cookie('my_name', my_name);
+  res.send(`Cookie for ${my_name} sent`);
+  next();
 });
+
 
 // Play with cookies
 app.get('/use_cookie', function (req, res, next) {
   // console.log(req.cookie);
-  if(typeof req.cookies["my_name"] != 'undefined') {
-      res.send(`Hello ${req.cookies["my_name"]} is logged in!`);    
+  if (typeof req.cookies["my_name"] != 'undefined') {
+    res.send(`Hello ${req.cookies["my_name"]} is logged in!`);
   } else {
-      res.send("You are not logged in!");
+    res.send("You are not logged in!");
   }
   next();
 });
 
-// app.all 
 app.all('*', function (request, response, next) {
-  console.log(request);
   console.log(request.method + ' to ' + request.path);
   next();
 });
@@ -59,7 +63,7 @@ app.post("/process_login", function (req, res) {
 
   if (typeof user_data[the_username] != 'undefined') { //matching username
     if (user_data[the_username].password == req.body.password) { //if all the info is correct, then redirect to the invoice page
-      res.redirect('/invoice3.html?' + queryString.stringify(req.query));
+      res.redirect('/invoice3.html' + queryString.stringify(req.query));
       return;
 
     } else { //if the pw has error, push an error
@@ -82,10 +86,8 @@ app.post("/process_register", function (req, res) {
   user_data[username]["password"]= req.body['password'];
   user_data[username]["email"] = req.body['email'];
   
-  
-    fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
-    res.redirect('/invoice3.html?' + queryString.stringify(req.query));
-  
+  res.send(`${username} is registered`);
+  fs.writeFileSync(filename, JSON.stringify(user_data), "utf-8");
 });
 
 

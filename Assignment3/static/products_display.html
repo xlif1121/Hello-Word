@@ -1,181 +1,125 @@
-<!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
-<script src="products.js" type="text/javascript"></script>
-
+<script src="functions.js"> </script>
 <script>
-    function isNonNegInt(q, return_errors = false) {
-        errors = []; // assume no errors at first
-        if(q == '') q =0; // handle blank inputs as if they are 0
-        if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
-        else if (q < 0) errors.push('<font color="red">Negative value!</font>'); // Check if it is non-negative
-        else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
-        return return_errors ? errors : (errors.length == 0);
-    }
-
-    function checkQuantityTextbox(theTextbox) {
-        errs = isNonNegInt(theTextbox.value, true);
-        if (errs.length == 0) errs = ['You want:'];
-        if (theTextbox.value.trim() == '') errs = ['Quantity'];
-        document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-    }
-
-
+    // above I am refrencing my products.json file and using this file to load the different products that I am going to sell and siplay on my website
+    var params = (new URL(document.location)).searchParams;
+    var product_type = params.get("products_key");
+    var products_data;
+    loadJSON('get_products_data', function (response) {
+        // Parsing JSON string into object
+        products_data = JSON.parse(response);
+    });
     window.onload = function () {
-        let params = (new URL(document.location)).searchParams; // get the query string which has the form data
-        // form was submitted so check that quantities are valid then redirect to invoice if ok.
-        if (params.has('purchase_submit')) {
-            has_errors = false; // assume quantities are valid from the start
-            total_qty = 0; // need to check if something was selected so we will look if the total > 0
-            for (i = 0; i < products.length; i++) {
-                if (params.has(`quantity${i}`)) {
-                    a_qty = params.get(`quantity${i}`);
-                    // make textboxes sticky in case of invalid data
-                    product_selection_form[`quantity${i}`].value = a_qty;
-                    total_qty += a_qty; 
-                    if(!isNonNegInt(a_qty)) {
-                        has_errors = true; // oops, invalid quantity
-                        checkQuantityTextbox(product_selection_form[`quantity${i}`]); // show where the error is
-                    }
+        loadJSON('get_cart_data', function (response) {
+            // Parsing JSON string into object
+            cart_data = JSON.parse(response);
+        });
+        if (typeof cart_data[product_type] != 'undefined') { //if we have data in our cart for this data then put in in the form
+            for (quant_item in cart_data[product_type]) {
+                for (i in cart_data[product_type][quant_item]) {
+                    products_form[`quantity[${quant_item}][${i}]`].value = cart_data[product_type][quant_item][i];
                 }
-            }
-            
-            // Now respond to errors or redirect to invoice if all is ok
-            if(has_errors) {
-                alert("Please enter only valid quantities!");
-            } else if(total_qty == 0) { // no quantity selections, just give a general alert
-                alert("Please select some quantities!");
-            } else { //all good to go! send to login
-            location.href="./login.html" + location.search;
             }
         }
     }
-</script>
 
+
+    var products = products_data[product_type];
+    // this code is similar to lab 12, however I have modified the code to fit for assignment 1 better
+    function isNonNegint(q, return_errors = false) {
+        // this is to check is th values that are put in the textbox are valid or not, to see if it is a number, positive and also if it is a whol number
+        errors = [];// this assumes that there are no errors to begin with
+        if (q == '') q = 0; // this makes that if there is no value put in for a quantity then the value is 0
+        if (Number(q) != q) errors.push('<font color="red">Not a Number</font>')// this checks if the input value is a number or not
+        else if (q < 0) errors.push('<font color="red">Negative Quantity</font>') // this checks if the value put in is a positiv or negative number
+        else if (parseInt(q) != q) errors.push('<font color="red">Not a Full Value</font>') // this checks if the value put for quantity is a full value or not stopping someone from puttig decimals in the quantity
+        return return_errors ? errors : (errors.lenght == 0);
+    }
+
+    function checkQuantitityTextbox(quantitytextbox) { // here we are using the isnonnegint function to check if the values put in are correct or not
+        errs = isNonNegint(quantitytextbox.value, true);
+        document.getElementById(quantitytextbox.name + "_message").innerHTML = errs.join(',');
+
+    }
+    var this_product_key = ''
 </script>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Footwear Products</title>
-    <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
-    <link href="Products-style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    .navbar {
-      overflow: hidden;
-      background-color: #333;
-    }
-    
-    .navbar a {
-      float: left;
-      font-size: 16px;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    
-    .dropdown {
-      float: left;
-      overflow: hidden;
-    }
-    
-    .dropdown .dropbtn {
-      font-size: 16px;  
-      border: none;
-      outline: none;
-      color: white;
-      padding: 14px 16px;
-      background-color: inherit;
-      font-family: inherit;
-      margin: 0;
-    }
-    
-    .navbar a:hover, .dropdown:hover .dropbtn {
-      background-color: red;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-    
-    .dropdown-content a {
-      float: none;
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      text-align: left;
-    }
-    
-    .dropdown-content a:hover {
-      background-color: #ddd;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max's  Shop</title>
+    <link rel="stylesheet" href="Products-style.css">
+    <link rel="stylesheet" href=https://fonts.googleapis.com/css?family=Oswald|Open+Sans">
+    <style type="text/css">
+        h1,
+        h2 {
+            text-align: center;
+        }
     </style>
-    <body>
-
 </head>
-<body id="theBody">
-    
-        
-<header>    <h1>
-            Xinfei's Footwear Store
-        </h1>
-        <br>
-        <div class="navbar">
-          <a href="./index.html">Home</a>
-          <a href="./products_display.html">Products</a>
-          <a href="./invoice3.html">Shopping Cart</a>
-          <div class="dropdown">
-            <button class="dropbtn">Account 
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a class="active" href="./login.html">Login</a>
-                <a href="./register.html">Register</a>
-            </div>
-          </div> 
-        </div>
-    
-<br>
-<br>
-<br>
-<br>
-    </header>
-    <form action=" " name="product_selection_form" method="GET">
-    <div>
+
+<body>
+    <script> nav_bar(this_product_key, products_data);</script>
+    <h1>Welcome to my
+        <script>document.write(product_type.charAt(0).toUpperCase() + product_type.slice(1))</script> shop
+    </h1>
+    <script>
+        // the code below was borrowed from the screencast for assignment 1 
+    </script>
+    <script>
+        // the code below is to open a form that is going to be used to be able to put in quantities, have a button to purchase the selected products, and have textboxes where you can put in quantities and be able to validate these quantities.
+    </script>
+    <form name="products_form" action="./add_to_cart" method="GET">
+        <div>
             <main>
                 <script>
-                    for (i = 0; i < products.length; i++) {
-                        document.write(`
-                <section class="item">
-                    <h2>${products[i].name}</h2>
-                    <p>$${products[i].price}</p>
-                    <label id="quantity${i}_label"}">Quantity</label>
-                    <input type="text" placeholder="0" name="quantity${i}"
-                    onkeyup="checkQuantityTextbox(this);">
-                    <img src="./Images/${products[i].image}">
-                </section>
-                `)
+                    document.write(`<input type="hidden" name="product_type" value ='${product_type}'`);
+                    // displaying the products from my products.json 
+                    // the labes for the quantity and size was borrowed from the startup on assignment 1 video, the professr helped me a bit with this in combination with the function. this is to display the products, with images and prices. there are also textboxes where the user can put in their own quantities.
+                    for (i in products) {
+                        if (product_type == 'tshirt') {
+                            document.write(`
+        <section class="item">
+        <h2>${products[i].item}</h2>
+        <br><label>Quantity Small</label></br>
+        <input type="text" name="quantity[small][${i}]" placeholder ="0" onkeyup="checkQuantitityTextbox(this);">
+        <span id='quantity_small${i}_message'>Enter a quantity</span>
+        <br><label>Quantity Medium</label></br>
+        <input type="text" name="quantity[medium][${i}]" placeholder ="0" onkeyup="checkQuantitityTextbox(this);">
+        <span id='quantity_medium${i}_message'>Enter a quantity</span>
+        <br><label>Quantity Large</label></br>
+        <input type="text" name="quantity[large][${i}]" placeholder ="0" onkeyup="checkQuantitityTextbox(this);">
+        <span id='quantity_large${i}_message'>Enter a quantity</span>
+        <br><img src=./images/${products[i].image}>
+        <p>$${products[i].price.toFixed(2)}</p>
+    </section>
+        `)
+                        } else {
+                            document.write(`
+        <section class="item">
+        <h2>${products[i].item}</h2>
+        <br><label>Quantity</label></br>
+        <input type="text" name="quantity[any][${i}]" placeholder ="0" onkeyup="checkQuantitityTextbox(this);">
+        <span id='quantity${i}_message'>Enter a quantity</span>
+        <br><img src=./images/${products[i].image}>
+        <p>$${products[i].price.toFixed(2)}</p>
+    </section>
+        `)
+                        }
+
                     }
                 </script>
             </main>
         </div>
-        <input type="submit" value="Purchase" name="purchase_submit">
-        </form>
-    </body>
-    
-    </html>
+        <script>
+    // the code below is used to make a button and to take me to the invoice page, and use the quantities that I have put in to the different quantities for S,M,L and later I am going to use these quantities to be put in the invoice.
+        </script>
+        <input type="submit" onclick="displayPurchase();" value="Purchase">
+    </form>
+
+    <h1>Thank You for Shopping!</h1>
+</body>
+
+</html>

@@ -1,20 +1,32 @@
 <!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
 <script src="./products.js" type="text/javascript"></script>
-
 <script src="./user_data.json" type="json"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <script>
   let params = (new URL(document.location)).searchParams;
-  var quantities = [];
-  if (params.has('purchase_submit')) {
-    for (i = 0; i < products.length; i++) {
-      if (params.has(`quantity${i}`)) {
-        a_qty = params.get(`quantity${i}`);
-        quantities[i] = a_qty;
-      }
-    }
-  }
+  var shop_cart ={};
+  loadJSON('get_shoppingcart', function (res) {
+    // Parsing JSON string into object
+    shop_cart = JSON.parse(res);
+
+  });
+  var myproducts_data = {};
+  loadJSON('get_mydata', function (res) {
+    // Parsing JSON string into object
+    myproducts_data = JSON.parse(res);
+  });
+//不是
+  //var quantities = [];
+  //if (params.has('purchase_submit')) {
+   // for (i = 0; i < products.length; i++) {
+     // if (params.has(`quantity${i}`)) {
+      //  a_qty = params.get(`quantity${i}`);
+      //  quantities[i] = a_qty;
+    //  }
+    //}
+ // }
 
     
 </script>
@@ -44,13 +56,15 @@
       }
   </script>
   <header>    <h1>
-    Xinfei's Footwear Store
+    Xinfei's Marketplace
 </h1>
 <br>
 <div class="navbar">
   <a href="./index.html">Home</a>
-  <a href="./products_display.html">Products</a>
-  <a href="./invoice3.html">Shopping Cart</a>
+  <a href="./products_display.html">Sneaker</a>
+  <a href="./Bearbrick.html">Bearbrick</a>
+  <a href="./Streetwear.html">Streetwear</a>
+  <a href="./cart.html">Shopping Cart</a>
   <div class="dropdown">
     <button class="dropbtn">Account 
       <i class="fa fa-caret-down"></i>
@@ -70,31 +84,35 @@
     <table id='invoice3' border="2">
       <tbody>
         <tr>
-          <th style="text-align: center;" width="43%">Item</th>
+          <th style="text-align: center;" width="43%">name</th>
           <th style="text-align: center;" width="11%">quantity</th>
           <th style="text-align: center;" width="13%">price</th>
           <th style="text-align: center;" width="54%">extended price</th>
         </tr>
       
-        <script>
-          subtotal=0;
-          
-          for (i = 0; i < products.length; i++) {
-          if (quantities[i] > 0) {
-            // product row
-            extended_price = quantities[i] * products[i].price
-            subtotal += extended_price;
-            document.write(`
+        <script>//fixed 不是
+           subtotal = 0;
+          for (keykey in shop_cart) {
+            products = myproducts_data[keykey]
+            for (i = 0; i < products.length; i++) {
+              let a_quantity = shop_cart[keykey][i];
+              if (a_quantity > 0) {
+                // product row
+                extended_price = a_quantity * products[i].price
+                subtotal += extended_price;
+                document.write(` 
+ 
      <br> <tr>
+       <td  width="11%">${a_quantity}</td>
         <td width="43%">${products[i].name}</td>
         <td align="center" width="11%">${quantities[i]}</td>
         <td width="13%">\$${products[i].price}</td>
         <td width="54%">\$${extended_price}</td>
       </tr>
-      `);
+      `);//不是
           }
         }
-
+      }
 
      //compute tax
      var tax_rate = 0.045;
@@ -108,7 +126,7 @@
       shipping = 100;
     }
     else{
-      shipping = 0.05*subtotal; // 3% of subtotal
+      shipping = 0.05*subtotal; // 5% of subtotal
     }
      //compute grant total
      var total = subtotal + tax + shipping;

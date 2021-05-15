@@ -1,3 +1,12 @@
+<script src="./functions.js"></script> 
+<script>
+var products_data;
+loadJSON('get_products_data', function(response) {
+     // Parsing JSON string into object
+     products_data = JSON.parse(response);
+});
+var this_product_key = ''
+</script>
 <!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
 <!DOCTYPE html>
 <html lang="en">
@@ -6,16 +15,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Footwear Store Home</title>
+    <title> Home</title>
+    <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="index.css" rel="stylesheet">
+    <script src="./navbar.js"></script>
+
+    <script>
+        var myproducts_data;
+        loadJSON('get_data', function(res) {
+             // Parsing JSON string into object
+             myproducts_data = JSON.parse(res);
+        });
+        var this_product_key = ''
+        </script>
     <style>
-        
         body {
-            
+
             text-align: center;
-            background-image:url("12345.jpg;");
+            background-image: url("12345.jpg;");
             background-repeat: no-repeat;
-            background-size:auto;
-            
+            background-size: auto;
+
         }
 
 
@@ -36,17 +57,36 @@
         }
     </style>
 </head>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sneaker</title>
+ 
+
+</head>
+
+
     <body>
-    <h1 style="font-family:monospace;">Welcome to Xinfei's Footwear Store</h1>
-    <a href="./products_display.html">
-    <img src="https://pic1.zhimg.com/v2-cbb3a7c45d1828f9a696aa17fc1d0263_1440w.jpg?source=172ae18b" style="width:500px;height:600px;">
-    </a>
+        <script> nav_bar(this_product_key, products_data);</script> <br>
+        <h1 style="font-family:monospace;">Welcome to Xinfei's Marketplace</h1>
+        <a href="./products_display.html">
+           <center> <img src="https://pic1.zhimg.com/v2-cbb3a7c45d1828f9a696aa17fc1d0263_1440w.jpg?source=172ae18b"
+                style="width:500px;height:600px ;"></center>
+        </a>
 
-    
-    
-    <h1 style="font-family:monospace;"><b>Shop comfortable, fashionable women's footwear on Xinfei's Footwear Store!</h1></b>
-    <h2><font color = "black">Click the image to enter!</font></h2>
-      
 
-</body>
+
+        <h1 style="font-family:monospace;"><b> You Can Find The Rarest Exclusives to Your Everyday Sneaker, Bearbrick,
+                and Streetwear On Xinfei's Marketplace!</h1></b>
+        <h3>
+            <font color="black">Click the bear to enter!</font>
+        </h3>
+
+
+    </body>
+
 </html>
+    
+     

@@ -1,0 +1,118 @@
+<!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
+<script src="products.js"></script>
+
+<script src="./navbar.js"></script>
+
+
+
+<script>
+    window.onload = function () {
+        let params = (new URL(document.location)).searchParams; // get the query string which has the form data
+        // form was submitted so check that quantities are valid then redirect to invoice if ok.
+        var  this_product_key = params.get("product_key");
+  var products = allproducts[this_product_key];//不是
+        if (params.has('purchase_submit')) {
+            has_errors = false; // assume quantities are valid from the start
+            total_qty = 0; // need to check if something was selected so we will look if the total > 0
+            for (i = 0; i < products.length; i++) {
+                if (params.has(`quantity${i}`)) {
+                    a_qty = params.get(`quantity${i}`);
+                    // make textboxes sticky in case of invalid data
+                    product_selection_form[`quantity${i}`].value = a_qty;
+                    total_qty += a_qty;
+                    if (!isNonNegInt(a_qty)) {
+                        has_errors = true; // oops, invalid quantity
+                        checkQuantityTextbox(product_selection_form[`quantity${i}`]); // show where the error is
+                    }
+                }
+            }
+
+            // Now respond to errors or redirect to invoice if all is ok
+            if (has_errors) {
+                alert("Please enter only valid quantities!");
+            } else if (total_qty == 0) { // no quantity selections, just give a general alert
+                alert("Please select some quantities!");
+            } else { //all good to go! send to login
+                location.href = "./login.html" + location.search;
+            }
+        }
+    }
+  
+// let params = (new URL(document.location)).searchParams;
+ //var product_key = params.get("product_key");
+ //var product = products_list[product_key];//不是
+
+ var data;
+    loadJSON('get_data', function(res) {
+         // Parsing JSON string into object
+         data = JSON.parse(res);
+    });
+    var this_product_key = ''
+
+    function isNonNegInt(q, return_errors = false) {
+        errors = []; // assume no errors at first
+        if (q == '') q = 0; // handle blank inputs as if they are 0
+        if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
+        else if (q < 0) errors.push('<font color="red">Negative value!</font>'); // Check if it is non-negative
+        else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
+        return return_errors ? errors : (errors.length == 0);
+    }
+
+    function checkQuantityTextbox(theTextbox) {
+        errs = isNonNegInt(theTextbox.value, true);
+        if (errs.length == 0) errs = ['You want:'];
+        if (theTextbox.value.trim() == '') errs = ['Quantity'];
+        document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+    }
+
+</script>
+
+</script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sneaker</title>
+    <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
+    <link href="Products-style.css" rel="stylesheet">
+
+</head>
+
+<body id="theBody">
+    <div><script>navbar();</script></div>
+    <br>
+    <br>
+    <br>
+    
+    <header>
+        <center><h1>
+            Xinfei's Marketplace
+        </h1></center>
+ 
+    <form action=" " name="product_selection_form" method="GET">
+        
+        <div>
+            <main>
+                <script>
+                    for (i = 0; i < products.length; i++) {
+                        document.write(`
+                <section class="item">
+                    <h2>${products[i].name}</h2>
+                    <p>$${products[i].price}</p>
+                    <label id="quantity${i}_label"}">Quantity</label>
+                    <input type="text" placeholder="0" name="quantity${i}"
+                    onkeyup="checkQuantityTextbox(this);">
+                    <img src="./Images/${products[i].image}">
+                </section>
+                `)
+                    }//class="purchasebtn" name="purchase_submit"
+                </script>
+            </main>
+        </div>
+        <input type="submit" value="Add to Shopping Cart" >
+        
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+
+<head>
+    <script src="./functions.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=cherry+swash|Raalewy" rel="stylesheet">
+    <link href="Products-style.css" rel="stylesheet">
+    <script>// code from as3 example
+        var myproducts_data;
+        loadJSON('get_data', function (res) {
+            // Parsing JSON string into object
+            myproducts_data = JSON.parse(res);
+        });
+        loadJSON('get_shoppingcart', function (res) {
+            // Parsing JSON string into object
+            shop_cart = JSON.parse(res);
+        });
+
+        nav_bar('', myproducts_data);
+function remove_item(dkey,index){ // remove items key
+    console.log(dkey,index);
+    location.href=`./remove?dkey=${dkey}&index=${index}`;
+}
+//不是
+    </script>
+</head>
+
+<div class="navbar">
+    <a href="./products_display.html">Sneaker</a>
+    <a href="./Bearbrick.html">Bearbrick</a>
+    <a href="./Streetwear.html">Streetwear</a>
+      </div>
+      <center><h3>You have in your shopping cart:</h3></center>
+<table border><th>Quantity</th><th>Item</th>
+<script>
+  for(let product_key in myproducts_data) {
+      products = productslist[]
+    for(i=0; i<myproducts_data[product_key].length; i++) {
+        if(typeof shop_cart[product_key] == 'undefined') continue;
+        qty = shop_cart[product_key][i];
+        if(qty > 0) {
+            document.write(`<tr><td>${qty}</td><td>${myproducts_data[product_key][i].name}</td>
+                <td><button class="remove" onclick="remove_item('${product_key}',${i})">Remove</button></td><tr>`);
+        }
+    }
+}
+</script>
+</table>
+<form action="/placeorder" method="GET">
+        
+    <input type="submit" value="Place Order" class="purchasebtn" name="place_order">
+    </form>
+    <input type="button" onClick="location.href='products_display.html'" class="cancelbtn" value='Continue Shopping'>
+    <input type="submit" class="button" value="Continue Shopping" onclick="window.location.href = './index.html';" float:left>
+    <input name="purchase_submit" type="submit" class="button" value="Confirm Purchase" onclick="scanCart();">
+</body>
+</html>

@@ -1,0 +1,60 @@
+<script>
+    // the code below I have taken help from the screencast on how to get started on assignment 2 and  alot of it is very similar to it
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_4.css">
+    <title>Login page</title>
+</head>
+
+<body>
+    <script>
+        document.write(`<form action="process_login${location.search}" method="POST">`);
+    </script>
+
+
+    <div class="imgcontainer">
+        <img src="images/avatar.jpg" alt="avatar" class="avatar">
+    </div>
+
+    <div class="container">
+        <label for="username" id="username_label" Username></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+        <label for="password" id="password_label" Password></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+
+        <button type="submit">Login</button>
+
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn"> <a href="products_display.html">Cancel</button>
+        <script>
+            document.write(`<span class="password">Forgot <a href="register.html${location.search}">password?</a></span>`);
+        </script>
+    </div>
+    </form>
+    </from>
+</body>
+
+</html>
+<script>
+    var params = (new URL(document.location)).searchParams;
+    if (params.has("login_error")) {
+        alert("Login failed");
+        error = params.get("login_error");
+        if (error == " password_error") {
+            password_label.innerHTML = "<font color='red'> password incorrect  </font>";
+        } else if (error == "username_error") {
+            username_label.innerHTML = "<font color='red'> username incorrect </font>";
+        }
+    }
+</script>

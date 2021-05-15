@@ -1,0 +1,110 @@
+<head>
+    <script src="./functions.js"></script>
+    <link rel="stylesheet" href="Products-style.css">
+    
+    <script>
+
+        // get the query string
+        let params = (new URL(document.location)).searchParams;
+        if (params.has('products_key')) {
+            var products_key = params.get('products_key');
+        } else {
+            document.write('no products key in query string');
+            document.stop;
+        }
+
+        var myproducts_data;
+        var total = 0;
+        loadJSON('get_data', function (response) {
+            // Parsing JSON string into object
+            myproducts_data = JSON.parse(response);
+        });
+
+        loadJSON('get_cart', function (response) {
+            // Parsing JSON string into object
+            shop_cart = JSON.parse(response);
+            for (pk in shop_cart) {
+                total += shop_cart[pk].reduce((a, b) => a + b);
+            }
+        });
+    </script>
+</head>
+<center>
+    <header>
+
+        <nav>
+            <ul style="text-align: center">
+                <a href="index.html"> Home </a>
+
+                <script>
+                    if (getCookie('the_username')!=''){
+                        document.write(`<div class="logout"><a href="logout">${getCookie('the_username')} is Login now. Wanna Logout?</a></div>`)
+                    }else{
+                        document.write(`<div class="login"><a href="login.html${location.search}">Login</a></div>`)
+
+                    }
+                    
+                    
+                </script>
+                <script>
+                    document.write(`<div class="checkout"><a href="invoice3.html${location.search}">Check Out</a></div>`)
+                </script>
+            </ul>
+        </nav>
+    </header>
+
+    <h3>
+        <script> nav_bar(products_key, myproducts_data);</script>
+    </h3>
+</center>
+
+<h3>You have <b><span id="cart_total" style="font-size: 35px; color:tomato">0</span></b> items in your shopping cart: <a
+        href='./cart.html'>View Cart</a></h3>
+<script>cart_total.innerHTML = total;</script>
+<script>
+
+
+    // This function takes a string assumed to be a key in the products array above to display and select the corresponding products
+    var order_str = '';
+    // get the particular products to display
+    products = myproducts_data[products_key];
+    if (params.has('Submit')) {
+        // grab the quantities from the query string
+        order_str = 'Your order is:<br>';
+        for (i = 0; i < products.length; i++) {
+            order_str += `You want ${params.get(`quantities[${i}]`)} of ${products[i]['name']}<br>`;
+        }
+    } else {
+        order_str += `<h1>Please select what ${products_key} you want</h1><br>`;
+        // We put the whole table in the form so that anything entered in it will get submitted
+        order_str += `
+            <FORM action="/add_shoppingcar" method="GET">
+            <INPUT TYPE="HIDDEN" NAME="products_key" VALUE="${products_key}">
+                <TABLE BORDER>
+                    <TR><TD><B><BIG>Description</TD><TD><B><BIG>Price</TD><TD><B><BIG>Quantity Desired</TD></TR>`;
+
+
+        for (i = 0; i < products.length; i++) {
+            order_str += `<TR><TD>${products[i]['name']}</TD><TD>${products[i]['price']}</TD><TD>
+                <INPUT TYPE="TEXT"  name="quantities[${i}]"></TD></TR>`;
+        }
+        order_str += `</TABLE><br>
+        <center>
+<INPUT TYPE="SUBMIT" name="Submit" value="Select" style="font-size: 18px">
+    </center>
+</FORM>`;
+    } // this closes the else for the form and table display
+    document.write(order_str);
+
+    // to let user put valid quantity
+
+    // I got this from Assignment1 example
+    function redisplay() {
+        let params = (new URL(document.location)).searchParams; // get the query string which has the form data
+        // form was submitted so check that quantities are valid then redirect to invoice if ok.
+
+       
+    }
+
+</script>
+<form name="product_form" action="purchase" method="GET">

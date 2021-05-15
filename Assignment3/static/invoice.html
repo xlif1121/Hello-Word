@@ -1,0 +1,123 @@
+<script src="functions.js"> </script>
+
+<script>
+  var products_data;
+  loadJSON('get_products_data', function (response) {
+    // Parsing JSON string into object
+    products_data = JSON.parse(response);
+  });
+
+  var params = (new URL(document.location)).searchParams;
+  var cart_data = {};
+  loadJSON('get_cart_data', function (response) {
+    // Parsing JSON string into object
+    cart_data = JSON.parse(response);
+  });
+  console.log(cart_data);
+  // check if the quantities are valid and if not send them back to products display, I got some help from the professor on this.
+
+   // this makes it so that no user may acess the invoice without logging in
+  // if(params.has('username') == false){
+   // alert('Please log in first');
+   // location.href='./products_display.html';
+   // window.stop;
+ // }
+
+
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style_3.css">
+  <title>Invoice</title>
+</head>
+<script> nav_bar('', products_data);</script>
+
+<body>
+  <table border="2" class="center">
+    <tbody>
+      <tr>
+        <th style="text-align: center;" width="25%">Item</th>
+        <th style="text-align: center;" width="11%">quantity</th>
+        <th style="text-align: center;" width="25%">price</th>
+        <th style="text-align: center;" width="20%">extended price</th>
+      </tr>
+      <script>
+        // here i am displaying the invoice with the products with small medium and large sizes, i have a loop that makes it only put up where quantities are entered and not put up products where there are 0 quantities of. 
+        subtotal = 0;
+        for (prod_key in cart_data) {
+          var products = products_data[prod_key];
+          for (prod_size in cart_data[prod_key]) {
+            for (i in cart_data[prod_key][prod_size]) {
+              let qty = cart_data[prod_key][prod_size][i];
+              if (qty > 0) {
+                extended_price = qty * products[i].price;
+                subtotal += extended_price;
+                // this is for quantities in the small size
+                document.write(`
+              <tr>
+                <td width="43%">${(prod_size != 'any')? prod_size:''} ${products[i].item}</td>
+                <td align="center" width="11%"> ${qty}</td>
+                <td width="13%"> $${products[i].price}</td>
+                <td width="54%"> $${extended_price}</td>
+              </tr>
+              `);
+              }
+            }
+          }
+        }
+      </script>
+      <script>
+          // this code is similar to what we did in invoice 4 and i modified it a bit to fit for the clothing store better
+          // compute tax
+          var tax_rate = 0.04; // 4% is the sales tax in hawaii 
+          var tax = tax_rate * subtotal
+          // Compute shipping
+          if (subtotal <= 25) {
+            shipping = 2;
+          }
+          else if (subtotal <= 50) {
+            shipping = 5;
+          }
+          else {
+            shipping = 0.05 * subtotal;
+          }
+          // compute total 
+          var total = subtotal + tax + shipping;
+        //this is copied from the invoice wod, I have modified it a little bit, below is to print out the subtotal, the tax, the shipping and the total price
+      </script>
+      <tr>
+        <td colspan="4" width="100%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+        <td width="54%">$
+          <script>document.write(subtotal)</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 4%</span>
+        </td>
+        <td width="54%">$
+          <script>document.write(tax.toFixed(2))</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Shipping</span></td>
+        <td width="54%">$
+          <script>document.write(shipping.toFixed(2))</script>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+        <td width="54%"><strong>$
+            <script>document.write(total.toFixed(2))</script>
+          </strong></td>
+      </tr>
+    </tbody>
+  </table>
+<button onclick="location.href='./checkout';">Checkout</button>

@@ -4,16 +4,21 @@
         "password": "grader",
         "email": "itm352@hawaii.edu"
     },
-    "xlif": {
-        "name": "Xinfei",
-        "password": "password",
-        "email": "xinfeili@hawaii.edu"
-    },
+    "kazman": {
+        "name": "Rick Kazman",
+        "password": "kazmanpassword",
+        "email": "kazman@hawaii.edu"
+      },
     "xxx1121": {
         "name": "Xinfei Li",
         "password": "xxx1121",
         "email": "xlif1121@gmail.com"
     },
+    "dport": {
+        "name": "Dan Port",
+        "password": "portspassword",
+        "email": "dport@hawaii.edu"
+      },
     "xx1121": {
         "name": "Xinfei rr",
         "password": "xx1121",

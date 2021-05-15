@@ -1,0 +1,60 @@
+<script src="functions.js"> </script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style_3.css">
+  <title>Cart</title>
+</head>
+<body>
+  <h1>These Items are currently in your shopping cart</h1>
+  <form action="./login_page.html" method="GET">
+  <script>
+      var products_data;
+  loadJSON('get_products_data', function (response) {
+    // Parsing JSON string into object
+    products_data = JSON.parse(response);
+  });
+nav_bar('', products_data);
+
+    loadJSON('get_cart_data', function (response) {
+      // Parsing JSON string into object
+      cart_data = JSON.parse(response);
+    });
+    for (product_type in cart_data) {
+
+      for (quant_item in cart_data[product_type]) {
+        for (i in cart_data[product_type][quant_item]) {
+         // products_form[`quantity[${quant_item}][${i}]`].value = cart_data[product_type][quant_item][i];
+         qty = cart_data[product_type][quant_item][i];
+         if(qty == 0){
+           continue;
+         }
+         document.write(`
+            <table style='border:solid 1px;'>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Extended Price</th>
+  </tr>
+  <tr>
+    <td>${products_data[product_type][i]['item']}</td>
+    <td>${qty}</td>
+    <td>${products_data[product_type][i]['price']}</td>
+    <td></td>
+  </tr>
+</table>`)
+        }
+      }
+    }
+  </script>
+  <h1>Continue shopping or contiue your purchase to the invoice</h1>
+  <button type='submit'>Continue to invoice</button>
+  </form>
+</body>
+
+</html>

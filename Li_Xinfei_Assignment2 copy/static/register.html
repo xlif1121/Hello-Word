@@ -1,0 +1,65 @@
+<!--Borrowed and modified from WODs, Labs, Assignment1 and Assignment2, modified template from ww3schools.com-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration page</title>
+  <link rel="stylesheet" href="register.css">
+
+
+</head>
+
+<body>
+  <center><img src="./images/122.jpg" alt="Avatar" class="avatar"> </center>
+  <center>
+
+    <form action="process_register" method="POST">
+      <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+
+        <label for="fullname" size="30"><b>Fullname</b></label>
+        <input type="text" placeholder="Enter fullname" class="form__input" name="fullname" id="fullname"
+          pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" required>
+
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" class="form__input" name="username" id="username"
+          pattern=".[a-z0-9]{4,12}" required
+          title="Minimum: 4 Characters. Maximum: 12 Characters. Numbers and/or Letters Only.">
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email"
+          pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" class="form__input" name="password" id="password"
+          pattern=".{6,}" required title="Minimu: 6 Characters">
+   
+
+    <label for="repeat_password"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" class="form__input" name="repeat_password"
+      id="repeat_password" pattern=".{6,}" required title="Minimu: 6 Characters">
+
+
+
+
+        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+        <button type="submit" class="registerbtn">Register</button>
+
+      </div>
+
+      <div class="container signin">
+        <p>Already have an account? <a href="login.html">Sign in</a>.</p>
+      </div>
+    </form>
+    <script>
+      register.action += document.location.search; // save inputted query string
+    </script>
+</body>
+
+</html>
